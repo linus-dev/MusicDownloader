@@ -4,8 +4,13 @@ import ffmpeg
 import os
 import sys
 import os.path
+import datetime
 from mega import Mega
 from secrets import email, password
+
+now = datetime.datetime.now()
+
+print(now.strftime("%Y-%m-%d %H:%M:%S"))
 
 if os.path.isfile('/home/pi/MusicDownloader/running.lock'):
     print("Already running, exiting...")
@@ -36,6 +41,10 @@ ydl_opts = {
 
 with youtube_dl.YoutubeDL(ydl_opts) as ydl:
     ydl.download(['https://www.youtube.com/playlist?list=PLP_yH_3aruhXVkpN2TIU-jexyunVB-g4P'])
+
+now = datetime.datetime.now()
+
+print(now.strftime("%Y-%m-%d %H:%M:%S"))
 
 if not files:
     print('Nothing to upload')
