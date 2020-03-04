@@ -24,7 +24,7 @@ def my_hook(d):
 
 ydl_opts = {
     'format': 'bestaudio',
-    'download_archive': 'MusicDownloader/archive.txt',
+    'download_archive': 'archive.txt',
     'outtmpl': '%(title)s - %(uploader)s.%(ext)s',
     'postprocessors': [{
         'key': 'FFmpegExtractAudio',
