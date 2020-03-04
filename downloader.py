@@ -2,21 +2,18 @@
 import youtube_dl
 import ffmpeg
 import os
+import sys
 import os.path
 from mega import Mega
 from secrets import email, password
 
-#stop_if_already_running()
+if os.path.isfile('running.lock'):
+    print("Already running, exiting...")
+    sys.exit()
+
 f = open("running.lock", "x")
 
 files = []
-
-""" def stop_if_already_running():
-	if os.path.isfile('running.lock'):
-        print ("Already running, exiting...")
-        exit
-    else:
-        print ("Continue") """
 
 def my_hook(d):
     if d['status'] == 'finished':
