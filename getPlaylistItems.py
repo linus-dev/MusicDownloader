@@ -11,7 +11,7 @@ if os.path.isfile('/home/pi/MusicDownloader/running.lock'):
     print("Already running, exiting...")
     sys.exit()
 
-f = open("running.lock", "x")
+f = open("/home/pi/MusicDownloader/running.lock", "x")
 
 files = []
 
@@ -40,4 +40,4 @@ with youtube_dl.YoutubeDL(ydl_opts) as ydl:
 for item in files:
     os.remove(item)
 
-os.remove('running.lock')
+#os.remove('/home/pi/MusicDownloader/running.lock')

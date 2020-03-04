@@ -55,4 +55,4 @@ else:
 for item in files:
     os.remove(item)
 
-os.remove('running.lock')
+#os.remove('/home/pi/MusicDownloader/running.lock')
