@@ -26,8 +26,12 @@ def my_hook(d):
         if '.mp3' in webm: 
             mp3 = webm.replace('.webm', '.mp3')
 
-        if '.m4a' in webm:
+        elif '.m4a' in webm:
             mp3 = webm.replace('.m4a', '.mp3')
+
+        else:
+            print('Could not change filename')
+            sys.exit()
         
         files.append(mp3)
         print('Added {} to list!'.format(mp3))
