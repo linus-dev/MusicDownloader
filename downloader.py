@@ -23,7 +23,9 @@ files = []
 def my_hook(d):
     if d['status'] == 'finished':
         webm = d['filename']
-        mp3 = webm.replace('.webm', '.mp3')
+        webm.replace('.webm', '.mp3')
+        webm.replace('.m4a', '.mp3')
+        mp3 = webm
         files.append(mp3)
         print('Added {} to list!'.format(mp3))
 
@@ -56,6 +58,7 @@ else:
     # Upload to MEGA
     folder = m.find('Port Du Soleil')
     for item in files:
+        print('Uploading {}'.format(item))
         m.upload(item, folder[0])
         print('{} uploaded!'.format(item))
 
