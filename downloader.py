@@ -19,7 +19,6 @@ if os.path.isfile('/home/pi/MusicDownloader/running.lock'):
 f = open("/home/pi/MusicDownloader/running.lock", "x")
 
 files = []
-mp3 = ''
 
 def my_hook(d):
     if d['status'] == 'finished':
