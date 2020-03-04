@@ -40,4 +40,4 @@ with youtube_dl.YoutubeDL(ydl_opts) as ydl:
 for item in files:
     os.remove(item)
 
-#os.remove('/home/pi/MusicDownloader/running.lock')
+os.remove('/home/pi/MusicDownloader/running.lock')
