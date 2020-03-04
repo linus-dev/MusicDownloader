@@ -23,7 +23,7 @@ files = []
 def my_hook(d):
     if d['status'] == 'finished':
         webm = d['filename']
-        if '.mp3' in webm: 
+        if 'webm' in webm: 
             mp3 = webm.replace('.webm', '.mp3')
 
         elif '.m4a' in webm:
