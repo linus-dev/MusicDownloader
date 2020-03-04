@@ -11,12 +11,12 @@ f = open("running.lock", "x")
 
 files = []
 
-def stop_if_already_running():
+""" def stop_if_already_running():
 	if os.path.isfile('running.lock'):
         print ("Already running, exiting...")
         exit
     else:
-        print ("Continue")
+        print ("Continue") """
 
 def my_hook(d):
     if d['status'] == 'finished':
