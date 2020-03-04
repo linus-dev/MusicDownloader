@@ -19,13 +19,17 @@ if os.path.isfile('/home/pi/MusicDownloader/running.lock'):
 f = open("/home/pi/MusicDownloader/running.lock", "x")
 
 files = []
+mp3 = ''
 
 def my_hook(d):
     if d['status'] == 'finished':
         webm = d['filename']
-        webm.replace('.webm', '.mp3')
-        webm.replace('.m4a', '.mp3')
-        mp3 = webm
+        if '.mp3' in webm: 
+            mp3 = webm.replace('.webm', '.mp3')
+
+        if '.m4a' in webm:
+            mp3 = webm.replace('.m4a', '.mp3')
+        
         files.append(mp3)
         print('Added {} to list!'.format(mp3))
 
