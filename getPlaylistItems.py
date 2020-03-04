@@ -1,4 +1,4 @@
-#Hej
+#!/usr/bin/python3
 import youtube_dl
 import ffmpeg
 import os
@@ -7,7 +7,7 @@ import os.path
 from mega import Mega
 from secrets import email, password
 
-if os.path.isfile('running.lock'):
+if os.path.isfile('/home/pi/MusicDownloader/running.lock'):
     print("Already running, exiting...")
     sys.exit()
 
@@ -24,7 +24,7 @@ def my_hook(d):
 
 ydl_opts = {
     'format': 'bestaudio',
-    'download_archive': 'archive.txt',
+    'download_archive': '/home/pi/MusicDownloader/archive.txt',
     'outtmpl': '%(title)s - %(uploader)s.%(ext)s',
     'postprocessors': [{
         'key': 'FFmpegExtractAudio',
