@@ -6,7 +6,7 @@ import os.path
 from mega import Mega
 from secrets import email, password
 
-stop_if_already_running()
+#stop_if_already_running()
 f = open("running.lock", "x")
 
 files = []
@@ -27,7 +27,7 @@ def my_hook(d):
 
 ydl_opts = {
     'format': 'bestaudio',
-    'download_archive': 'archive.txt',
+    'download_archive': 'MusicDownloader/archive.txt',
     'outtmpl': '%(title)s - %(uploader)s.%(ext)s',
     'postprocessors': [{
         'key': 'FFmpegExtractAudio',
