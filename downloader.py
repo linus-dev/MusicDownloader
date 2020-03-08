@@ -63,7 +63,7 @@ else:
     print('Logged in to {}'.format(email))
 
     # Upload to MEGA
-    folder = m.find('Port Du Soleil')
+    folder = m.find('FromYoutube')
     for item in files:
         print('Uploading {}'.format(item))
         m.upload(item, folder[0])
