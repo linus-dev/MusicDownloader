@@ -4,19 +4,22 @@ import ffmpeg
 import os
 import sys
 import os.path
-import datetime
+from datetime import datetime
 from mega import Mega
 from secrets import email, password
 
-now = datetime.datetime.now()
-
-print(now.strftime("%Y-%m-%d %H:%M:%S"))
 
 if os.path.isfile('/home/pi/MusicDownloader/running.lock'):
     print("Already running, exiting...")
     sys.exit()
 
-f = open("/home/pi/MusicDownloader/running.lock", "x")
+lock = open("/home/pi/MusicDownloader/running.lock", "x")
+lock.close()
+
+log = open("/home/pi/MusicDownloader/logger.log", "a+")
+
+now = datetime.now()
+log.write(now.strftime("%m-%d-%Y %H:%M:%S - ") + 'Started...'
 
 files = []
 
@@ -30,11 +33,18 @@ def my_hook(d):
             mp3 = webm.replace('.m4a', '.mp3')
 
         else:
-            print('Could not change filename')
+            now = datetime.now()
+            log.write(now.strftime("%m-%d-%Y %H:%M:%S - ") + 'Could not change filename'
             sys.exit()
         
         files.append(mp3)
-        print('Added {} to list!'.format(mp3))
+        now = datetime.now()
+        log.write(now.strftime("%m-%d-%Y %H:%M:%S - ") + 'Added {} to list!'.format(mp3))
+
+    if d['status'] == 'downloading':
+        now = datetime.now()
+        log.write(now.strftime("%m-%d-%Y %H:%M:%S - ") + 'Downloading ' + d['filename'])
+        
 
 ydl_opts = {
     'format': 'bestaudio',
@@ -51,27 +61,36 @@ ydl_opts = {
 with youtube_dl.YoutubeDL(ydl_opts) as ydl:
     ydl.download(['https://www.youtube.com/playlist?list=PLP_yH_3aruhXVkpN2TIU-jexyunVB-g4P'])
 
-now = datetime.datetime.now()
-
-print(now.strftime("%Y-%m-%d %H:%M:%S"))
 
 if not files:
-    print('Nothing to upload')
+    now = datetime.now()
+    log.write(now.strftime("%m-%d-%Y %H:%M:%S - ") + 'Nothing to upload'
 else:
     mega = Mega()
     m = mega.login(email, password)
-    print('Logged in to {}'.format(email))
+    now = datetime.now()
+    log.write(now.strftime("%m-%d-%Y %H:%M:%S - ") + 'Logged in to {}'.format(email))
 
     # Upload to MEGA
     folder = m.find('FromYoutube')
     for item in files:
-        print('Uploading {}'.format(item))
-        m.upload(item, folder[0])
-        print('{} uploaded!'.format(item))
+        now = datetime.now()
+        log.write(now.strftime("%m-%d-%Y %H:%M:%S - ") + 'Uploading {}'.format(item))
 
-    print('All files uploaded!')
+        #Actual uploading
+        m.upload(item, folder[0])
+
+        now = datetime.now()
+        log.write(now.strftime("%m-%d-%Y %H:%M:%S - ") + '{} uploaded!'.format(item))
+
+    now = datetime.now()
+    log.write(now.strftime("%m-%d-%Y %H:%M:%S - ") + 'All files uploaded!')
 
 for item in files:
     os.remove(item)
 
 os.remove('/home/pi/MusicDownloader/running.lock')
+
+now = datetime.now()
+log.write(now.strftime("%m-%d-%Y %H:%M:%S - ") + ' --- DONE! ---')
+log.close()
