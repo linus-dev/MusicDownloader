@@ -4,6 +4,7 @@ import ffmpeg
 import os
 import sys
 import os.path
+from datetime import datetime
 from mega import Mega
 from secrets import email, password
 
@@ -12,6 +13,12 @@ if os.path.isfile('/home/pi/MusicDownloader/running.lock'):
     sys.exit()
 
 f = open("/home/pi/MusicDownloader/running.lock", "x")
+f.close()
+
+log = open("/home/pi/MusicDownloader/logger.log", "a+")
+
+now = datetime.now()
+log.write(now.strftime("%m-%d-%Y %H:%M:%S - ") + 'Started...')
 
 files = []
 
@@ -20,7 +27,12 @@ def my_hook(d):
         webm = d['filename']
         mp3 = webm.replace('.webm', '.mp3')
         files.append(mp3)
-        print('Added {} to list!'.format(mp3))
+        now = datetime.now()
+        log.write(now.strftime("%m-%d-%Y %H:%M:%S - ") + 'Added {} to list!'.format(mp3))
+
+    if d['status'] == 'downloading':
+        now = datetime.now()
+        log.write(now.strftime("%m-%d-%Y %H:%M:%S - ") + 'Downloading ' + d['filename'])
 
 ydl_opts = {
     'format': 'bestaudio',
@@ -41,3 +53,7 @@ for item in files:
     os.remove(item)
 
 os.remove('/home/pi/MusicDownloader/running.lock')
+
+now = datetime.now()
+log.write(now.strftime("%m-%d-%Y %H:%M:%S - ") + ' --- DONE! ---')
+log.close()
