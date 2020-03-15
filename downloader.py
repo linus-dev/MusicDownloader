@@ -18,7 +18,7 @@ lock.close()
 log = open("/home/pi/MusicDownloader/logger.log", "a+")
 
 now = datetime.now()
-log.write(now.strftime("%m-%d-%Y %H:%M:%S - ") + 'Started...')
+log.write(now.strftime("\n%m-%d-%Y %H:%M:%S - ") + 'Started...')
 
 files = []
 
@@ -33,16 +33,16 @@ def my_hook(d):
 
         else:
             now = datetime.now()
-            log.write(now.strftime("%m-%d-%Y %H:%M:%S - ") + 'Could not change filename')
+            log.write(now.strftime("\n%m-%d-%Y %H:%M:%S - ") + 'Could not change filename')
             sys.exit()
         
         files.append(mp3)
         now = datetime.now()
-        log.write(now.strftime("%m-%d-%Y %H:%M:%S - ") + 'Added {} to list!'.format(mp3))
+        log.write(now.strftime("\n%m-%d-%Y %H:%M:%S - ") + 'Added {} to list!'.format(mp3))
 
     if d['status'] == 'downloading':
         now = datetime.now()
-        log.write(now.strftime("%m-%d-%Y %H:%M:%S - ") + 'Downloading ' + d['filename'])
+        log.write(now.strftime("\n%m-%d-%Y %H:%M:%S - ") + 'Downloading ' + d['filename'])
         
 
 ydl_opts = {
@@ -63,27 +63,27 @@ with youtube_dl.YoutubeDL(ydl_opts) as ydl:
 
 if not files:
     now = datetime.now()
-    log.write(now.strftime("%m-%d-%Y %H:%M:%S - ") + 'Nothing to upload')
+    log.write(now.strftime("\n%m-%d-%Y %H:%M:%S - ") + 'Nothing to upload')
 else:
     mega = Mega()
     m = mega.login(email, password)
     now = datetime.now()
-    log.write(now.strftime("%m-%d-%Y %H:%M:%S - ") + 'Logged in to {}'.format(email))
+    log.write(now.strftime("\n%m-%d-%Y %H:%M:%S - ") + 'Logged in to {}'.format(email))
 
     # Upload to MEGA
     folder = m.find('FromYoutube')
     for item in files:
         now = datetime.now()
-        log.write(now.strftime("%m-%d-%Y %H:%M:%S - ") + 'Uploading {}'.format(item))
+        log.write(now.strftime("\n%m-%d-%Y %H:%M:%S - ") + 'Uploading {}'.format(item))
 
         #Actual uploading
         m.upload(item, folder[0])
 
         now = datetime.now()
-        log.write(now.strftime("%m-%d-%Y %H:%M:%S - ") + '{} uploaded!'.format(item))
+        log.write(now.strftime("\n%m-%d-%Y %H:%M:%S - ") + '{} uploaded!'.format(item))
 
     now = datetime.now()
-    log.write(now.strftime("%m-%d-%Y %H:%M:%S - ") + 'All files uploaded!')
+    log.write(now.strftime("\n%m-%d-%Y %H:%M:%S - ") + 'All files uploaded!')
 
 for item in files:
     os.remove(item)
@@ -91,5 +91,5 @@ for item in files:
 os.remove('/home/pi/MusicDownloader/running.lock')
 
 now = datetime.now()
-log.write(now.strftime("%m-%d-%Y %H:%M:%S - ") + ' --- DONE! ---')
+log.write(now.strftime("\n%m-%d-%Y %H:%M:%S - ") + ' --- DONE! ---')
 log.close()
