@@ -8,7 +8,6 @@ from datetime import datetime
 from mega import Mega
 from secrets import email, password
 
-
 if os.path.isfile('/home/pi/MusicDownloader/running.lock'):
     print("Already running, exiting...")
     sys.exit()
@@ -19,7 +18,7 @@ lock.close()
 log = open("/home/pi/MusicDownloader/logger.log", "a+")
 
 now = datetime.now()
-log.write(now.strftime("%m-%d-%Y %H:%M:%S - ") + 'Started...'
+log.write(now.strftime("%m-%d-%Y %H:%M:%S - ") + 'Started...')
 
 files = []
 
@@ -34,7 +33,7 @@ def my_hook(d):
 
         else:
             now = datetime.now()
-            log.write(now.strftime("%m-%d-%Y %H:%M:%S - ") + 'Could not change filename'
+            log.write(now.strftime("%m-%d-%Y %H:%M:%S - ") + 'Could not change filename')
             sys.exit()
         
         files.append(mp3)
@@ -64,7 +63,7 @@ with youtube_dl.YoutubeDL(ydl_opts) as ydl:
 
 if not files:
     now = datetime.now()
-    log.write(now.strftime("%m-%d-%Y %H:%M:%S - ") + 'Nothing to upload'
+    log.write(now.strftime("%m-%d-%Y %H:%M:%S - ") + 'Nothing to upload')
 else:
     mega = Mega()
     m = mega.login(email, password)
